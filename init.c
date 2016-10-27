@@ -35,18 +35,14 @@ extern void torch_LongTensorOperator_init(lua_State *L);
 extern void torch_FloatTensorOperator_init(lua_State *L);
 extern void torch_DoubleTensorOperator_init(lua_State *L);
 
-#ifdef TH_USE_HALF_MATH
+#if TH_NATIVE_HALF
 extern void torch_HalfTensorOperator_init(lua_State *L);
 #endif
 
 extern void torch_TensorMath_init(lua_State *L);
 
 static int torch_hashalfmath(lua_State *L) {
-  /* Whether of not 'half' has CPU math defined.
-     Todo: set to true for ARM and define math in this case
-     instead of TH_USE_HALF_MATH compile-time switch
-  */
-  lua_pushboolean(L, 0);
+  lua_pushboolean(L, TH_NATIVE_HALF);
   return 1;
 }
 
@@ -56,8 +52,10 @@ static void torch_half_init(lua_State *L)
     {"hashalfmath", torch_hashalfmath},
     {NULL, NULL}
   };
-
   luaT_setfuncs(L, half_funcs__, 0);
+
+  lua_pushboolean(L, 1);
+  lua_setfield(L, -2, "hasHalf");
 }
 
 LUA_EXTERNC DLL_EXPORT int luaopen_libtorch(lua_State *L);
@@ -70,8 +68,8 @@ int luaopen_libtorch(lua_State *L)
   lua_setglobal(L, "torch");
 
   torch_utils_init(L);
-
   torch_File_init(L);
+  torch_half_init(L);
 
   torch_ByteStorage_init(L);
   torch_CharStorage_init(L);
@@ -99,7 +97,7 @@ int luaopen_libtorch(lua_State *L)
   torch_FloatTensorOperator_init(L);
   torch_DoubleTensorOperator_init(L);
 
-#ifdef TH_USE_HALF_MATH
+#if TH_NATIVE_HALF
   torch_HalfTensorOperator_init(L);
 #endif
 
