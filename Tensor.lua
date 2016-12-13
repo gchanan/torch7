@@ -198,6 +198,7 @@ function Tensor.__tostring__(self)
    if self:nDimension() == 0 then
       table.insert(strt, '[' .. torch.typename(self) .. ' with no dimension]\n')
    else
+      print("type ", self:type())
       local tensor = torch.DoubleTensor():resize(self:size()):copy(self)
       if tensor:nDimension() == 1 then
          local format,scale,sz = Storage__printformat(tensor:storage())
