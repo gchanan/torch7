@@ -384,6 +384,7 @@ static int torch_Tensor_(select)(lua_State *L)
   return 1;
 }
 
+#ifndef TH_GENERIC_NO_MATH
 static int torch_Tensor_(indexSelect)(lua_State *L)
 {
   int narg = lua_gettop(L);
@@ -567,6 +568,7 @@ static int torch_Tensor_(maskedFill)(lua_State *L)
 
   return 1;
 }
+#endif
 
 static int torch_Tensor_(transpose)(lua_State *L)
 {
@@ -1140,6 +1142,7 @@ static void torch_Tensor_(c_readTensorStorageSizeStride)(lua_State *L, int index
       THArgCheck(0, index, "expecting number");
 }
 
+#ifndef TH_GENERIC_NO_MATH
 static int torch_Tensor_(apply)(lua_State *L)
 {
   THTensor *tensor = luaT_checkudata(L, 1, torch_Tensor);
@@ -1217,6 +1220,7 @@ static int torch_Tensor_(map2)(lua_State *L)
   lua_settop(L, 1);
   return 1;
 }
+#endif
 
 static int torch_Tensor_(factory)(lua_State *L)
 {
@@ -1295,6 +1299,7 @@ static const struct luaL_Reg torch_Tensor_(_) [] = {
   {"narrow", torch_Tensor_(narrow)},
   {"sub", torch_Tensor_(sub)},
   {"select", torch_Tensor_(select)},
+#ifndef TH_GENERIC_NO_MATH
   {"index", torch_Tensor_(indexSelect)},
   {"indexCopy", torch_Tensor_(indexCopy)},
   {"indexAdd", torch_Tensor_(indexAdd)},
@@ -1302,6 +1307,7 @@ static const struct luaL_Reg torch_Tensor_(_) [] = {
   {"maskedSelect", torch_Tensor_(maskedSelect)},
   {"maskedCopy", torch_Tensor_(maskedCopy)},
   {"maskedFill", torch_Tensor_(maskedFill)},
+#endif
   {"transpose", torch_Tensor_(transpose)},
   {"t", torch_Tensor_(t)},
   {"unfold", torch_Tensor_(unfold)},
@@ -1311,9 +1317,11 @@ static const struct luaL_Reg torch_Tensor_(_) [] = {
   {"isSize", torch_Tensor_(isSize)},
   {"nElement", torch_Tensor_(nElement)},
   {"copy", torch_Tensor_(copy)},
+#ifndef TH_GENERIC_NO_MATH
   {"apply", torch_Tensor_(apply)},
   {"map", torch_Tensor_(map)},
   {"map2", torch_Tensor_(map2)},
+#endif
   {"read", torch_Tensor_(read)},
   {"write", torch_Tensor_(write)},
   {"__index__", torch_Tensor_(__index__)},
