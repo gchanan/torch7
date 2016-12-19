@@ -6,7 +6,7 @@
 #include "THGeneral.h"
 
 # if defined (TH_HALF_TYPE)
-typedef TH_HALF_TYPE half;
+//typedef TH_HALF_TYPE half;
 # else
 /* Neither built-in nor included from Cutorch, use our definition lifted from CUDA */
 #if defined(__GNUC__)
@@ -54,3 +54,4 @@ TH_API float TH_half2float(half a);
 #define TH_HALF_MAX_EXPONENT10 4
 
 #endif
+//#endif
