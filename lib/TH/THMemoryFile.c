@@ -628,7 +628,9 @@ THFile *THMemoryFile_newWithStorage(THCharStorage *storage, const char *mode)
     THMemoryFile_readLong,
     THMemoryFile_readFloat,
     THMemoryFile_readDouble,
+#if TH_GENERIC_USE_HALF
     THMemoryFile_readHalf,
+#endif
     THMemoryFile_readString,
 
     THMemoryFile_writeByte,
@@ -638,7 +640,9 @@ THFile *THMemoryFile_newWithStorage(THCharStorage *storage, const char *mode)
     THMemoryFile_writeLong,
     THMemoryFile_writeFloat,
     THMemoryFile_writeDouble,
+#if TH_GENERIC_USE_HALF
     THMemoryFile_writeHalf,
+#endif
     THMemoryFile_writeString,
 
     THMemoryFile_synchronize,

@@ -622,7 +622,9 @@ THFile *THDiskFile_new(const char *name, const char *mode, int isQuiet)
     THDiskFile_readLong,
     THDiskFile_readFloat,
     THDiskFile_readDouble,
+#if TH_GENERIC_USE_HALF
     THDiskFile_readHalf,
+#endif
     THDiskFile_readString,
 
     THDiskFile_writeByte,
@@ -632,7 +634,9 @@ THFile *THDiskFile_new(const char *name, const char *mode, int isQuiet)
     THDiskFile_writeLong,
     THDiskFile_writeFloat,
     THDiskFile_writeDouble,
+#if TH_GENERIC_USE_HALF
     THDiskFile_writeHalf,
+#endif
     THDiskFile_writeString,
 
     THDiskFile_synchronize,
@@ -736,7 +740,9 @@ THFile *THPipeFile_new(const char *name, const char *mode, int isQuiet)
     THDiskFile_readLong,
     THDiskFile_readFloat,
     THDiskFile_readDouble,
+#if TH_GENERIC_USE_HALF
     THDiskFile_readHalf,
+#endif
     THDiskFile_readString,
 
     THDiskFile_writeByte,
@@ -746,7 +752,9 @@ THFile *THPipeFile_new(const char *name, const char *mode, int isQuiet)
     THDiskFile_writeLong,
     THDiskFile_writeFloat,
     THDiskFile_writeDouble,
+#if TH_GENERIC_USE_HALF
     THDiskFile_writeHalf,
+#endif
     THDiskFile_writeString,
 
     THDiskFile_synchronize,

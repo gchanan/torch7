@@ -1,10 +1,3 @@
-#include "THGeneral.h"
-
-#if TH_GENERIC_USE_HALF
-# include "THHalf.h"
-#endif
-
-
 struct THFile__
 {
     struct THFileVTable *vtable;
