@@ -35,14 +35,19 @@ typedef struct THAllocator {
   void (*free)(void*, void*);
 } THAllocator;
 ]]
+
+   -- Half
+   ffi.cdef[[
+typedef struct {
+  unsigned short x;
+} __half;
+typedef __half half;
+]]
+
    -- Storage
    for Real, real in pairs(Real2real) do
 
       local cdefs = [[
-typedef struct {
-  unsigned short x;
-} half;
-
 typedef struct THRealStorage
 {
     real *data;
