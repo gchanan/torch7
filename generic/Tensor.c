@@ -677,8 +677,10 @@ static int torch_Tensor_(copy)(lua_State *L)
     THTensor_(copyFloat)(tensor, src);
   else if( (src = luaT_toudata(L, 2, "torch.DoubleTensor")) )
     THTensor_(copyDouble)(tensor, src);
+#if TH_GENERIC_USE_HALF
   else if( (src = luaT_toudata(L, 2, "torch.HalfTensor")) )
     THTensor_(copyHalf)(tensor, src);
+#endif
   else
     luaL_typerror(L, 2, "torch.*Tensor");
   lua_settop(L, 1);
@@ -749,11 +751,13 @@ static int torch_Tensor_(__newindex__)(lua_State *L)
       THTensor_(narrow)(tensor, NULL, 0, index, 1);
       THTensor_(copyDouble)(tensor, src);
       THTensor_(free)(tensor);
+#if TH_GENERIC_USE_HALF
     } else if( (src = luaT_toudata(L, 3, "torch.HalfTensor")) ) {
       tensor = THTensor_(newWithTensor)(tensor);
       THTensor_(narrow)(tensor, NULL, 0, index, 1);
       THTensor_(copyHalf)(tensor, src);
       THTensor_(free)(tensor);
+#endif
     } else {
       luaL_typerror(L, 3, "torch.*Tensor");
     }
@@ -855,8 +859,10 @@ static int torch_Tensor_(__newindex__)(lua_State *L)
         THTensor_(copyFloat)(tensor, src);
       } else if( (src = luaT_toudata(L, 3, "torch.DoubleTensor")) ) {
         THTensor_(copyDouble)(tensor, src);
+#if TH_GENERIC_USE_HALF
       } else if( (src = luaT_toudata(L, 3, "torch.HalfTensor")) ) {
         THTensor_(copyHalf)(tensor, src);
+#endif
       } else {
         luaL_typerror(L, 3, "torch.*Tensor");
       }
