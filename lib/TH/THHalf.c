@@ -1,7 +1,4 @@
 #include "THHalf.h"
-#include "TH.h"
-
-static half half_max = TH_HALF_MAX;
 
 /*
  * Copyright 1993-2014 NVIDIA Corporation.  All rights reserved.
