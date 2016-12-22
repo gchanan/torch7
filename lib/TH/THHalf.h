@@ -4,8 +4,6 @@
 #include "THGeneral.h"
 #include <stdint.h>
 
-# if defined (TH_HALF_TYPE)
-# else
 /* Neither built-in nor included from Cutorch, use our definition lifted from CUDA */
 #if defined(__GNUC__)
 #define __align__(n) __attribute__((aligned(n)))
@@ -17,21 +15,20 @@
 
 typedef struct __align__(2){
   unsigned short x;
-} __half;
+} __TH_HALF;
 
 typedef struct __align__(4) {
     unsigned int x;
-} __half2;
+} __TH_HALF2;
 
-typedef __half half;
-typedef __half2 half2;
-# endif
+typedef __TH_HALF TH_HALF;
+typedef __TH_HALF2 TH_HALF2;
 
 /* numeric limits */
 
 
-TH_API half TH_float2half(float a);
-TH_API float TH_half2float(half a);
+TH_API TH_HALF TH_float2half(float a);
+TH_API float TH_half2float(TH_HALF a);
 
 #ifndef TH_HALF_BITS_TO_LITERAL
 # define TH_HALF_BITS_TO_LITERAL(n) { n }

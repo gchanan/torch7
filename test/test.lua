@@ -3365,24 +3365,34 @@ function torchtest_chunk(func)
    end
 end
 
-function torchtest.totable()
+function torchtest.table()
+   local convStorage = {
+     ['real'] = 'FloatStorage',
+     ['half'] = 'HalfStorage'
+   }
+   for k,v in ipairs(convStorage) do
+      torchtest_totable(torch.getmetatable(torch.Tensor():type())[k], v)
+   end
+end
+
+function torchtest_totable(func, storageType)
   local table0D = {}
-  local tensor0D = torch.Tensor(table0D)
+  local tensor0D = func(torch.Tensor(table0D))
   mytester:assertTableEq(torch.totable(tensor0D), table0D, 'tensor0D:totable incorrect')
 
   local table1D = {1, 2, 3}
-  local tensor1D = torch.Tensor(table1D)
-  local storage = torch.Storage(table1D)
+  local tensor1D = func(torch.Tensor(table1D))
+  local storage = torch[storageType](table1D)
   mytester:assertTableEq(tensor1D:totable(), table1D, 'tensor1D:totable incorrect')
   mytester:assertTableEq(storage:totable(), table1D, 'storage:totable incorrect')
   mytester:assertTableEq(torch.totable(tensor1D), table1D, 'torch.totable incorrect for Tensors')
   mytester:assertTableEq(torch.totable(storage), table1D, 'torch.totable incorrect for Storages')
 
   local table2D = {{1, 2}, {3, 4}}
-  local tensor2D = torch.Tensor(table2D)
+  local tensor2D = func(torch.Tensor(table2D))
   mytester:assertTableEq(tensor2D:totable(), table2D, 'tensor2D:totable incorrect')
 
-  local tensor3D = torch.Tensor({{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}})
+  local tensor3D = func(torch.Tensor({{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}}))
   local tensorNonContig = tensor3D:select(2, 2)
   mytester:assert(not tensorNonContig:isContiguous(), 'invalid test')
   mytester:assertTableEq(tensorNonContig:totable(), {{3, 4}, {7, 8}},

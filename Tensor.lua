@@ -560,9 +560,14 @@ torch.permute = Tensor.permute
 for _,type in ipairs(types) do
    local metatable = torch.getmetatable('torch.' .. type .. 'Tensor')
    for funcname, func in pairs(Tensor) do
-      -- totable requires apply, which is not implemented yet
       if funcname ~= 'totable' or type ~='Half' or torch.hashalfmath() then
          rawset(metatable, funcname, func)
+      else
+         local function Tensor__totable(self)
+            local host_tensor = self:float()
+            return self:float():totable()
+         end
+         rawset(torch.getmetatable('torch.HalfTensor'), 'totable', Tensor__totable)
       end
    end
 end
