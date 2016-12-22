@@ -24,7 +24,7 @@ if ok then
       Long='long',
       Float='float',
       Double='double',
-      Half='half'
+      Half='TH_HALF'
    }
 
    -- Allocator
@@ -40,8 +40,8 @@ typedef struct THAllocator {
    ffi.cdef[[
 typedef struct {
   unsigned short x;
-} __half;
-typedef __half half;
+} __TH_HALF;
+typedef __TH_HALF TH_HALF;
 ]]
 
    -- Storage
