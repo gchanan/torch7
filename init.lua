@@ -1,5 +1,5 @@
 -- We are using paths.require to appease mkl
-
+print("in init.lua")
 -- Make this work with LuaJIT in Lua 5.2 compatibility mode, which
 -- renames string.gfind (already deprecated in 5.1)
 if not string.gfind then
@@ -9,8 +9,18 @@ if not table.unpack then
    table.unpack = unpack
 end
 
+print("require paths")
 require "paths"
+print("done require paths")
+for k,v in pairs(paths) do
+    print(k,v)
+end
 paths.require "libtorch"
+print("done paths")
+for k,v       in pairs(paths)   do
+    print(k,v)
+end
+
 
 -- Keep track of all thread local variables torch.
 -- if a Lua VM is passed to another thread thread local
@@ -48,10 +58,14 @@ end
 local function include(file, depth)
    paths.dofile(file, 3 + (depth or 0))
 end
+print("rawset pre")
 rawset(_G, 'include', include)
+print("rawset done")
 
 function torch.include(package, file)
+   print("in torch.include package", file)
    dofile(torch.packageLuaPath(package) .. '/' .. file)
+   print("done tock.include package")
 end
 
 function torch.class(...)
@@ -151,8 +165,9 @@ function torch.isTypeOf(obj, typeSpec)
 end
 
 torch.setdefaulttensortype('torch.DoubleTensor')
-
+print("require torch.Tensor")
 require('torch.Tensor')
+print("require file")
 require('torch.File')
 require('torch.CmdLine')
 require('torch.FFI')
@@ -189,4 +204,5 @@ torch.Tensor.isTensor = torch.isTensor
 -- remove this line to disable automatic heap-tracking for garbage collection
 torch.setheaptracking(true)
 
+print("done init.lua")
 return torch
