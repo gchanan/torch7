@@ -57,7 +57,9 @@ int luaopen_libtorch(lua_State *L)
   torch_IntStorage_init(L);
   torch_LongStorage_init(L);
   torch_FloatStorage_init(L);
+  printf("Calling torch_DoubleStorage_init %p\n", torch_DoubleStorage_init);
   torch_DoubleStorage_init(L);
+  printf("Calling torch_HalfStorage_init %p\n", torch_HalfStorage_init);
   torch_HalfStorage_init(L);
 
   torch_ByteTensor_init(L);

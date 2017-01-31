@@ -282,6 +282,7 @@ static const struct luaL_Reg torch_Storage_(_) [] = {
 
 void torch_Storage_(init)(lua_State *L)
 {
+  printf("In torch version of %s (init) \n", torch_Storage);
   luaT_newmetatable(L, torch_Storage, NULL,
                     torch_Storage_(new), torch_Storage_(free), torch_Storage_(factory));
   luaT_setfuncs(L, torch_Storage_(_), 0);
